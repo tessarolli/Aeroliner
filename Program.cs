@@ -1,10 +1,18 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.SpaServices;
-using Microsoft.AspNetCore.SpaServices.Extensions;
 using Aeroliner.Models;
 using Aeroliner.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin",
+          builder =>
+          {
+              builder.WithOrigins("http://localhost:3000")
+                     .AllowAnyMethod()
+                     .AllowAnyHeader();
+          });
+});
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -36,28 +44,14 @@ app.UseFileServer(); //for serving static files and default file types
 
 app.UseRouting();
 
+app.UseCors("AllowAnyOrigin");
+
 app.MapFallbackToFile("index.html");
 
-//app.UseSpa(spa =>
-//{
-//    spa.Options.SourcePath = "ClientApp";
-
-
-//    if (app.Environment.IsDevelopment())
-//    {
-//        // Start both Angular and React development servers
-//        spa.UseConcurrently(
-//            "start:angular": "cd angular-app && ng serve",
-//            "start:react": "cd react-app && npm start"
-//        );
-//    }
-//    else
-//    {
-//        // Serve pre-built bundles for production
-//        spa.UseReactDevelopmentServer("react-app");
-//        spa.UseAngularCliServer("angular-app");
-//    }
-//});
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers().RequireCors("AllowAnyOrigin");
+});
 
 app.Run();
 

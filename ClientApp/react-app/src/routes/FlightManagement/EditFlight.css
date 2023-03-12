@@ -1,0 +1,10 @@
+﻿.Form {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+    .Form .FormElement {
+        flex: 1;
+        width: 500px;
+    } 

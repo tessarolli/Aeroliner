@@ -11,9 +11,9 @@ a) jQuery & Bootstrap
     Using: jQuery 3.6.4, Bootstrap 5.2.3
 
 b) Angular SPA
-    Url: /angular
+    Url: http://localhost:4200
     To-do
 
 c) React.js
-    Url: /react
-    To-do
+    Url: http://localhost:3000
+    Using: Material-UI 5.11.12, React-Router-dom 6.9.0
