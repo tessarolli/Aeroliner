@@ -20,7 +20,7 @@ namespace Aeroliner.Controllers
             await _flightsService.GetAsync();
 
 
-        [HttpGet("{id:length(24)}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Flight>> Get(string id)
         {
             if (Guid.TryParse(id, out var flightId))
@@ -41,13 +41,14 @@ namespace Aeroliner.Controllers
         [HttpPut]
         public async Task<IActionResult> Create(Flight newFlight)
         {
+            newFlight.Id = new Guid();
             await _flightsService.CreateAsync(newFlight);
 
             return CreatedAtAction(nameof(Create), new { id = newFlight.Id }, newFlight);
         }
 
 
-        [HttpPatch("{id:length(24)}")]
+        [HttpPost("{id}")]
         public async Task<IActionResult> Update(string id, Flight updatedFlight)
         {
             if (Guid.TryParse(id, out var flightId))
@@ -69,8 +70,8 @@ namespace Aeroliner.Controllers
             return BadRequest();
         }
 
-        [HttpDelete("{id:length(24)}")]
-        public async Task<IActionResult> Remove(string id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
             if (Guid.TryParse(id, out var flightId))
             {

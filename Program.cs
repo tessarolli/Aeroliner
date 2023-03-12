@@ -1,4 +1,6 @@
-
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.SpaServices;
+using Microsoft.AspNetCore.SpaServices.Extensions;
 using Aeroliner.Models;
 using Aeroliner.Services;
 
@@ -29,6 +31,33 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseFileServer(); //for serving static files and default file types
+
+app.UseRouting();
+
+app.MapFallbackToFile("index.html");
+
+//app.UseSpa(spa =>
+//{
+//    spa.Options.SourcePath = "ClientApp";
+
+
+//    if (app.Environment.IsDevelopment())
+//    {
+//        // Start both Angular and React development servers
+//        spa.UseConcurrently(
+//            "start:angular": "cd angular-app && ng serve",
+//            "start:react": "cd react-app && npm start"
+//        );
+//    }
+//    else
+//    {
+//        // Serve pre-built bundles for production
+//        spa.UseReactDevelopmentServer("react-app");
+//        spa.UseAngularCliServer("angular-app");
+//    }
+//});
 
 app.Run();
 

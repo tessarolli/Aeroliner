@@ -1,0 +1,14 @@
+{
+  "name": "aeroliner",
+  "version": "1.0.0",
+  "description": "Backend:\r A simple Restfull API using Dot net Core 6.0 and a locally installed MongoDB No-Sql database Server for listing flights",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "dotnet run",
+    "start:dev": "start cmd /k start-react-angular.cmd"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

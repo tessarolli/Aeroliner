@@ -18,7 +18,9 @@ public class FlightsService
     }
 
     public async Task<List<Flight>> GetAsync() =>
-        await _flightsCollection.Find(x => x.DepartureTime >= DateTime.Now && DateTime.Now <= x.ArrivalTime).ToListAsync();
+        await _flightsCollection.Find(_ => true).ToListAsync();
+    public async Task<List<Flight>> GetValidFlightsAsync() =>
+           await _flightsCollection.Find(x => x.DepartureTime >= DateTime.Now && DateTime.Now <= x.ArrivalTime).ToListAsync();
 
     public async Task<Flight?> GetAsync(Guid id) =>
         await _flightsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
