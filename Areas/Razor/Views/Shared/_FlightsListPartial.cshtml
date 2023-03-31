@@ -1,0 +1,86 @@
+﻿@using Aeroliner.Models
+
+@model IEnumerable<Flight>
+
+<!-- Fligths List -->
+<div class="col-md-6">
+    <h3>Flight List</h3>
+
+    <button type="button" class="btn btn-primary" id="btnAddFlight">Add Flight</button>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Flight Number</th>
+                <th>Departure Airport</th>
+                <th>Destination Airport</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var flight in Model)
+            {
+                <tr id="row-@flight.Id">
+                    <td>@flight.FlightNumber</td>
+                    <td>@flight.DepartureAirport</td>
+                    <td>@flight.DestinationAirport</td>
+                    <td>@flight.DepartureTime</td>
+                    <td>@flight.ArrivalTime</td>
+                    <td>@flight.Price</td>
+                    <td>
+                        <button class='btn btn-primary btn-sm btn-edit' data-id="@flight.Id" onclick="editButtonClicked(this)">Edit</button>
+                        <button class='btn btn-danger btn-sm btn-delete' data-id="@flight.Id" data-toggle="modal" data-target="#confirmModal">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@*Confirm Delete Modal*@
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-danger" id="confirmDelete">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function editButtonClicked(button) {
+        var flightId = button.getAttribute("data-id");
+
+        window.location.href = "@Url.Action("Edit", "Flight")/" + flightId;
+    }
+
+    $('#confirmModal').on('show.bs.modal', function(event) {
+        var $button = $(event.relatedTarget) // Button that triggered the modal
+        var id = $button.data('id') // Extract info from data-* attributes
+        // Send an AJAX request to delete the flight
+        $.ajax({
+            url: 'https://localhost:5000/api/flights/' + id,
+            type: 'DELETE',
+            success: function(data) {
+                // Remove the row from the list
+                $('#row-' + id).closest('tr').remove();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr, status, error);
+            }
+        });
+    })
+</script>

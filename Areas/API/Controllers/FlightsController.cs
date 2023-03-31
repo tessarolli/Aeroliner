@@ -3,9 +3,10 @@ using Aeroliner.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Aeroliner.Controllers
+namespace Aeroliner.Areas.API.Controllers
 {
     [ApiController]
+    [Area("api")]
     [Route("api/[controller]")]
     public class FlightsController : Controller
     {

@@ -1,0 +1,9 @@
+﻿@using Aeroliner.Models
+@model IEnumerable<Flight>
+ 
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Aeroliner - Simple Razor Client";
+}
+
+@Html.Partial("_FlightsListPartial", Model)
